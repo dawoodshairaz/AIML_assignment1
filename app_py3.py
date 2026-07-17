@@ -6,14 +6,13 @@ vectorizer = joblib.load("vectorizer.pkl")
 
 st.title("📧 Email Spam Detection")
 
-# Store the text separately
-if "text" not in st.session_state:
-    st.session_state.text = ""
+# Counter used to reset the text area
+if "clear_count" not in st.session_state:
+    st.session_state.clear_count = 0
 
-# Text area
 message = st.text_area(
     "Enter Email or SMS",
-    value=st.session_state.text
+    key=f"message_{st.session_state.clear_count}"
 )
 
 col1, col2 = st.columns(2)
@@ -33,5 +32,5 @@ with col1:
 
 with col2:
     if st.button("Clear All"):
-        st.session_state.text = ""
+        st.session_state.clear_count += 1
         st.rerun()
